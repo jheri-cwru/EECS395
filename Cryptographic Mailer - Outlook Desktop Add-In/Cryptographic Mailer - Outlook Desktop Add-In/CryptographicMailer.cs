@@ -10,36 +10,54 @@ namespace Cryptographic_Mailer___Outlook_Desktop_Add_In
 {
     public partial class CryptographicMailer
     {
-        private void ThisAddIn_Startup(object sender, System.EventArgs e)
+        PGPHandler pgpHandler;
+        private void Execute_On_Startup(object sender, System.EventArgs e)
         {
-            Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(addPublicKey);
-        }
-
-        private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
-        {
-            // Note: Outlook no longer raises this event. If you have code that 
-            //    must run when Outlook shuts down, see https://go.microsoft.com/fwlink/?LinkId=506785
-        }
-
-        private void addPublicKey(object OutgoingEmail, ref bool Cancel)
-        {
-            Outlook.MailItem Email = OutgoingEmail as Outlook.MailItem;
-
-            string ps_internet_headers = "https://schemas.microsoft.com/mapi/string/{00020386-0000-0000-C000-000000000046}/";
             
-            Stack<string> custom_header_names = new Stack<string>();
-            custom_header_names.Push("X-Public-Key");
-            custom_header_names.Push("X-Message-Hash");
 
-            Stack<string> custom_header_values = new Stack<string>();
-            custom_header_values.Push("THISISATESTKEY");
-            custom_header_values.Push("THISISATESTHASH");
-
-            foreach(string entry in custom_header_values)
+            //
+            using(var cred = new CredentialManagement.Credential())
             {
-                Email.PropertyAccessor.SetProperty((ps_internet_headers + custom_header_names.Pop()), custom_header_values.Pop());
+                cred.Username = "cwru.senior.project.395@outlook.com";
+                cred.Password = "Changeme1!TEST";
+                cred.Target = "CryptographyKey";
+                cred.PersistanceType = CredentialManagement.PersistanceType.LocalComputer;
+                cred.Type = CredentialManagement.CredentialType.Generic;
+                cred.Save();
             }
 
+            pgpHandler = new PGPHandler(new CredentialManagement.Credential { Target = "CryptographyKey" });
+            pgpHandler.GenerateKeyPair();
+
+            // Check that add-in is configured.
+            
+
+            // Register send handler to intercept & sign outgoing mail.
+            Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(SignAndSend);
+        }
+
+        private void SignAndSend(object OutgoingEmail, ref bool Cancel)
+        {
+            Outlook.MailItem mailObject = OutgoingEmail as Outlook.MailItem;
+            string signedMail = SignMail(mailObject);
+
+            mailObject = GenerateHeader(mailObject, Properties.Settings.Default.HeaderIdentifier_PublicKey, pgpHandler.GetPublicKey());
+            mailObject = GenerateHeader(mailObject, Properties.Settings.Default.HeaderIdentifier_SignedMessage, signedMail);
+        }
+
+        private string SignMail(Outlook.MailItem outgoingMail)
+        {
+            byte[] signedBytes = pgpHandler.SignContent(Encoding.UTF8.GetBytes(outgoingMail.HTMLBody));
+            return Encoding.ASCII.GetString(signedBytes);
+
+        }
+
+        private Outlook.MailItem GenerateHeader(Outlook.MailItem outgoingMail, string headerName, string headerValue)
+        {
+            string PS_INTERNET_HEADERS = "http://schemas.microsoft.com/mapi/string/{00020386-0000-0000-C000-000000000046}/";
+            outgoingMail.PropertyAccessor.SetProperty((PS_INTERNET_HEADERS + headerName), headerValue);
+
+            return outgoingMail;
         }
 
         #region VSTO generated code
@@ -50,8 +68,7 @@ namespace Cryptographic_Mailer___Outlook_Desktop_Add_In
         /// </summary>
         private void InternalStartup()
         {
-            this.Startup += new System.EventHandler(ThisAddIn_Startup);
-            this.Shutdown += new System.EventHandler(ThisAddIn_Shutdown);
+            this.Startup += new System.EventHandler(Execute_On_Startup);
         }
         
         #endregion
