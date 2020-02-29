@@ -1,0 +1,11 @@
+1. Set up a postgres database according to what we discussed i.e the following tables:
+	account_info(email, uuid, hash, pub_key)
+	lists(email, uuid, analyzed_key, confidence_level)
+
+2. Name the databae whatever you want obviously. keep in mind that postgres usually runs on port 5432 but I have the server 
+connected over 5433 as I have two postgres services running. You can change the server configuration however you want by
+changing stuff in the main.go file. All of that is documented in that file. Let me know if you have any problems.
+
+3. Each HTTP method and how to format the requests is documented in the handlers.go files.
+
+4. I hope you're running this on linux. If not, use the Ubuntu subsystem on windows to run it so that we don't run into any problems.
