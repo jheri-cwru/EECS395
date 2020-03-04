@@ -9,13 +9,13 @@
 //------------------------------------------------------------------------------
 
 #pragma warning disable 414
-namespace Cryptographic_Mailer___Outlook_Desktop_Add_In {
+namespace Trail {
     
     
     /// 
     [Microsoft.VisualStudio.Tools.Applications.Runtime.StartupObjectAttribute(0)]
     [global::System.Security.Permissions.PermissionSetAttribute(global::System.Security.Permissions.SecurityAction.Demand, Name="FullTrust")]
-    public sealed partial class CryptographicMailer : Microsoft.Office.Tools.Outlook.OutlookAddInBase {
+    public sealed partial class Trail : Microsoft.Office.Tools.Outlook.OutlookAddInBase {
         
         internal Microsoft.Office.Tools.CustomTaskPaneCollection CustomTaskPanes;
         
@@ -28,7 +28,7 @@ namespace Cryptographic_Mailer___Outlook_Desktop_Add_In {
         /// 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public CryptographicMailer(global::Microsoft.Office.Tools.Outlook.Factory factory, global::System.IServiceProvider serviceProvider) : 
+        public Trail(global::Microsoft.Office.Tools.Outlook.Factory factory, global::System.IServiceProvider serviceProvider) : 
                 base(factory, serviceProvider, "AddIn", "ThisAddIn") {
             Globals.Factory = factory;
         }
@@ -40,7 +40,7 @@ namespace Cryptographic_Mailer___Outlook_Desktop_Add_In {
         protected override void Initialize() {
             base.Initialize();
             this.Application = this.GetHostItem<Microsoft.Office.Interop.Outlook.Application>(typeof(Microsoft.Office.Interop.Outlook.Application), "Application");
-            Globals.CryptographicMailer = this;
+            Globals.Trail = this;
             global::System.Windows.Forms.Application.EnableVisualStyles();
             this.InitializeCachedData();
             this.InitializeControls();
@@ -174,7 +174,7 @@ namespace Cryptographic_Mailer___Outlook_Desktop_Add_In {
         private Globals() {
         }
         
-        private static CryptographicMailer _CryptographicMailer;
+        private static Trail _Trail;
         
         private static global::Microsoft.Office.Tools.Outlook.Factory _factory;
         
@@ -182,13 +182,13 @@ namespace Cryptographic_Mailer___Outlook_Desktop_Add_In {
         
         private static ThisFormRegionCollection _ThisFormRegionCollection;
         
-        internal static CryptographicMailer CryptographicMailer {
+        internal static Trail Trail {
             get {
-                return _CryptographicMailer;
+                return _Trail;
             }
             set {
-                if ((_CryptographicMailer == null)) {
-                    _CryptographicMailer = value;
+                if ((_Trail == null)) {
+                    _Trail = value;
                 }
                 else {
                     throw new System.NotSupportedException();
@@ -222,7 +222,7 @@ namespace Cryptographic_Mailer___Outlook_Desktop_Add_In {
         internal static ThisFormRegionCollection FormRegions {
             get {
                 if ((_ThisFormRegionCollection == null)) {
-                    _ThisFormRegionCollection = new ThisFormRegionCollection(Globals.CryptographicMailer.GetFormRegions());
+                    _ThisFormRegionCollection = new ThisFormRegionCollection(Globals.Trail.GetFormRegions());
                 }
                 return _ThisFormRegionCollection;
             }
@@ -263,13 +263,13 @@ namespace Cryptographic_Mailer___Outlook_Desktop_Add_In {
         
         internal WindowFormRegionCollection this[Microsoft.Office.Interop.Outlook.Explorer explorer] {
             get {
-                return ((WindowFormRegionCollection)(Globals.CryptographicMailer.GetFormRegions(explorer, typeof(WindowFormRegionCollection))));
+                return ((WindowFormRegionCollection)(Globals.Trail.GetFormRegions(explorer, typeof(WindowFormRegionCollection))));
             }
         }
         
         internal WindowFormRegionCollection this[Microsoft.Office.Interop.Outlook.Inspector inspector] {
             get {
-                return ((WindowFormRegionCollection)(Globals.CryptographicMailer.GetFormRegions(inspector, typeof(WindowFormRegionCollection))));
+                return ((WindowFormRegionCollection)(Globals.Trail.GetFormRegions(inspector, typeof(WindowFormRegionCollection))));
             }
         }
     }

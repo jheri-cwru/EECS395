@@ -6,11 +6,11 @@ using System.Security;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Cryptographic Mailer - Outlook Desktop Add-In")]
+[assembly: AssemblyTitle("Trail")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Cryptographic Mailer - Outlook Desktop Add-In")]
+[assembly: AssemblyProduct("Trail")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,7 +21,7 @@ using System.Security;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("06558931-66b3-43db-9f0a-b91ee4ee4318")]
+[assembly: Guid("893efeb7-1cd7-4541-b899-c52bb3b8f264")]
 
 // Version information for an assembly consists of the following four values:
 //

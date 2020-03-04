@@ -21,41 +21,18 @@
     <ProjectTypeGuids>{BAA0C2D2-18E2-41B9-852F-F413020CAA33};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E620712F-5587-4144-B9AB-C0B3B443023C}</ProjectGuid>
+    <ProjectGuid>{F391D89B-29C0-4634-B1AD-7F1E72C6D4B9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <RootNamespace>Cryptographic_Mailer___Outlook_Desktop_Add_In</RootNamespace>
-    <AssemblyName>Cryptographic Mailer - Outlook Desktop Add-In</AssemblyName>
+    <RootNamespace>Trail</RootNamespace>
+    <AssemblyName>Trail</AssemblyName>
+    <LoadBehavior>3</LoadBehavior>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <PublishUrl>publish\</PublishUrl>
-    <InstallUrl />
-    <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>1.0.0.0</ApplicationVersion>
-    <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
-    <UpdateEnabled>true</UpdateEnabled>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>days</UpdateIntervalUnits>
-    <IsWebBootstrapper>False</IsWebBootstrapper>
-    <ProductName>Cryptographic Mailer - Outlook Desktop Add-In</ProductName>
-    <PublisherName />
-    <SupportUrl />
-    <FriendlyName>Cryptographic Mailer - Outlook Desktop Add-In</FriendlyName>
-    <OfficeApplicationDescription />
-    <LoadBehavior>3</LoadBehavior>
+    <BootstrapperComponentsLocation>HomeSite</BootstrapperComponentsLocation>
   </PropertyGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.VSTORuntime.4.0">
       <Visible>False</Visible>
       <ProductName>Microsoft Visual Studio 2010 Tools for Office Runtime %28x86 and x64%29</ProductName>
@@ -191,7 +168,8 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="PGPHandler.cs" />
+    <Compile Include="Handlers\CredentialManager.cs" />
+    <Compile Include="Handlers\CryptographyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -204,8 +182,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="App.config" />
-    <None Include="Cryptographic Mailer - Outlook Desktop Add-In_TemporaryKey.pfx" />
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -216,16 +193,21 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="CryptographicMailer.cs">
+    <Compile Include="Trail.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="CryptographicMailer.Designer.xml">
-      <DependentUpon>CryptographicMailer.cs</DependentUpon>
+    <None Include="Trail.Designer.xml">
+      <DependentUpon>Trail.cs</DependentUpon>
     </None>
-    <Compile Include="CryptographicMailer.Designer.cs">
-      <DependentUpon>CryptographicMailer.Designer.xml</DependentUpon>
+    <Compile Include="Trail.Designer.cs">
+      <DependentUpon>Trail.Designer.xml</DependentUpon>
     </Compile>
     <AppDesigner Include="Properties\" />
+    <None Include="Trail_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Forms\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -235,10 +217,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Cryptographic Mailer - Outlook Desktop Add-In_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Trail_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>26C66A6CAF51348E1AF050B10F42301478683F9D</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B73214491ED65FB0CE3842DA1A692BDAEBD9ABC6</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -249,8 +231,8 @@
     <VisualStudio>
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
         <ProjectProperties HostName="Outlook" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2D1A56B2C1}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Outlook" Language="cs" TemplatesPath="" DebugInfoExeName="#Software\Microsoft\Office\16.0\Outlook\InstallRoot\Path#outlook.exe" AddItemTemplatesGuid="{A58A78EB-1C92-4DDD-80CF-E8BD872ABFC4}" />
-        <Host Name="Outlook" GeneratedCodeNamespace="Cryptographic_Mailer___Outlook_Desktop_Add_In" IconIndex="0">
-          <HostItem Name="ThisAddIn" Code="CryptographicMailer.cs" CanonicalName="AddIn" CanActivate="false" IconIndex="1" Blueprint="CryptographicMailer.Designer.xml" GeneratedCode="CryptographicMailer.Designer.cs" />
+        <Host Name="Outlook" GeneratedCodeNamespace="Trail" IconIndex="0">
+          <HostItem Name="ThisAddIn" Code="Trail.cs" CanonicalName="AddIn" CanActivate="false" IconIndex="1" Blueprint="Trail.Designer.xml" GeneratedCode="Trail.Designer.cs" />
         </Host>
       </FlavorProperties>
     </VisualStudio>

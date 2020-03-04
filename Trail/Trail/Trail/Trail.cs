@@ -4,50 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using Outlook = Microsoft.Office.Interop.Outlook;
-using Office = Microsoft.Office.Core;
+using Trail.Handlers;
 
-namespace Cryptographic_Mailer___Outlook_Desktop_Add_In
+namespace Trail
 {
-    public partial class CryptographicMailer
+    public partial class Trail
     {
-        PGPHandler pgpHandler;
-        private void Execute_On_Startup(object sender, System.EventArgs e)
+        private CryptographyManager cryptoContext;
+
+        private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            CredentialManager.generateCredential("cwru.senior.project.395@outlook.com", "TOBECHANGED", "Trail - Master Password");
             
-
-            //
-            using(var cred = new CredentialManagement.Credential())
-            {
-                cred.Username = "cwru.senior.project.395@outlook.com";
-                cred.Password = "Changeme1!TEST";
-                cred.Target = "CryptographyKey";
-                cred.PersistanceType = CredentialManagement.PersistanceType.LocalComputer;
-                cred.Type = CredentialManagement.CredentialType.Generic;
-                cred.Save();
-            }
-
-            pgpHandler = new PGPHandler(new CredentialManagement.Credential { Target = "CryptographyKey" });
-            pgpHandler.GenerateKeyPair();
+            cryptoContext = new CryptographyManager(CredentialManager.getCredential("Trail - Master Password"));
+            cryptoContext.GenerateKeyPair();
 
             // Check that add-in is configured.
-            
+
 
             // Register send handler to intercept & sign outgoing mail.
             Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(SignAndSend);
         }
-
         private void SignAndSend(object OutgoingEmail, ref bool Cancel)
         {
             Outlook.MailItem mailObject = OutgoingEmail as Outlook.MailItem;
             string signedMail = SignMail(mailObject);
 
-            mailObject = GenerateHeader(mailObject, Properties.Settings.Default.HeaderIdentifier_PublicKey, pgpHandler.GetPublicKey());
+            mailObject = GenerateHeader(mailObject, Properties.Settings.Default.HeaderIdentifier_PublicKey, cryptoContext.GetPublicKey());
             mailObject = GenerateHeader(mailObject, Properties.Settings.Default.HeaderIdentifier_SignedMessage, signedMail);
         }
 
         private string SignMail(Outlook.MailItem outgoingMail)
         {
-            byte[] signedBytes = pgpHandler.SignContent(Encoding.UTF8.GetBytes(outgoingMail.HTMLBody));
+            byte[] signedBytes = cryptoContext.SignContent(Encoding.UTF8.GetBytes(outgoingMail.HTMLBody));
             return Encoding.ASCII.GetString(signedBytes);
 
         }
@@ -60,6 +49,12 @@ namespace Cryptographic_Mailer___Outlook_Desktop_Add_In
             return outgoingMail;
         }
 
+        private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
+        {
+            // Note: Outlook no longer raises this event. If you have code that 
+            //    must run when Outlook shuts down, see https://go.microsoft.com/fwlink/?LinkId=506785
+        }
+
         #region VSTO generated code
 
         /// <summary>
@@ -68,7 +63,8 @@ namespace Cryptographic_Mailer___Outlook_Desktop_Add_In
         /// </summary>
         private void InternalStartup()
         {
-            this.Startup += new System.EventHandler(Execute_On_Startup);
+            this.Startup += new System.EventHandler(ThisAddIn_Startup);
+            this.Shutdown += new System.EventHandler(ThisAddIn_Shutdown);
         }
         
         #endregion

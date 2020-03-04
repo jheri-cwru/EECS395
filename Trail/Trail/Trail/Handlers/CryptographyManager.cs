@@ -4,25 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cryptographic_Mailer___Outlook_Desktop_Add_In
+namespace Trail.Handlers
 {
-    public class PGPHandler
+    class CryptographyManager
     {
         PgpCore.PGP pgpHandler;
         string cryptographyPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Properties.Settings.Default.DataPath + "\\Crypto";
         string username;
         string password;
 
-        public PGPHandler(CredentialManagement.Credential credential)
+        public CryptographyManager(CredentialManagement.Credential credential)
         {
             pgpHandler = new PgpCore.PGP();
             username = credential.Username;
             password = credential.Password;
-        }
-
-        public string GetPublicKey()
-        {
-            return System.IO.File.ReadAllText(cryptographyPath + "\\PublicKey.pkr");
         }
 
         public void GenerateKeyPair()
@@ -30,6 +25,11 @@ namespace Cryptographic_Mailer___Outlook_Desktop_Add_In
             pgpHandler.GenerateKey(cryptographyPath + "\\PublicKey.pkr", cryptographyPath + "\\PrivateKey.skr", username, password);
         }
 
+        public string GetPublicKey()
+        {
+            return System.IO.File.ReadAllText(cryptographyPath + "\\PublicKey.pkr");
+        }
+               
         public byte[] SignContent(byte[] rawContent)
         {
             System.IO.MemoryStream signedStream = new System.IO.MemoryStream();

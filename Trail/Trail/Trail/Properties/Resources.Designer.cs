@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptographic_Mailer___Outlook_Desktop_Add_In.Properties {
+namespace Trail.Properties {
     
     
     /// <summary>
@@ -38,7 +38,7 @@ namespace Cryptographic_Mailer___Outlook_Desktop_Add_In.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptographic_Mailer___Outlook_Desktop_Add_In.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Trail.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

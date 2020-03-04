@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptographic_Mailer___Outlook_Desktop_Add_In.Properties {
+namespace Trail.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
