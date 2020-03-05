@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml.Linq;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using Trail.Handlers;
+using Trail.Forms;
 
 namespace Trail
 {
@@ -14,12 +15,19 @@ namespace Trail
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            /*
+             * 
+             * Code for testing of key generation, visual layout of sign up, and header modification - will be removed and replaced
+             * once back-end is integrated.
+             * 
+             * SignupWindow window = new SignupWindow();
+            window.Show();
             CredentialManager.generateCredential("cwru.senior.project.395@outlook.com", "TOBECHANGED", "Trail - Master Password");
             
             cryptoContext = new CryptographyManager(CredentialManager.getCredential("Trail - Master Password"));
             cryptoContext.GenerateKeyPair();
 
-            // Check that add-in is configured.
+            // Check that add-in is configured.*/
 
 
             // Register send handler to intercept & sign outgoing mail.
