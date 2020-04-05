@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strings"
         "encoding/base64"
+	"encoding/json"
 	"github.com/google/uuid"
 )
 
@@ -31,27 +32,21 @@ func getAuthenticationInfo(r *http.Request) (string, string) {
         return authSlice[0], authSlice[1]
 }
 //Processes a POST request to the /signup endpont.
-//Request must have headers: 
-//Authorization: <email>:<hash> with <email>:<hash> base64 encoded.
-//X-Public-Key: <public key>
 func (s *Server) handleSignUp() http.HandlerFunc {
         db := s.DB
         return func(w http.ResponseWriter, r *http.Request) {
 		query := "INSERT INTO account_info(email, uuid, hash, pub_key) VALUES ($1, $2, $3, $4);"
-		var newUser User
-		newUser.Email, newUser.Hash = getAuthenticationInfo(r)
-		newUser.UUID = uuid.New().String()
-		newUser.PubKey = r.Header.Get("X-Public-Key")
+		var u User
 
-		_, err := db.Exec(query, newUser.Email, newUser.UUID, newUser.Hash, newUser.PubKey)
-	
-		fmt.Println("correct")
-
-		if err != nil {
-			fmt.Println(err)
-			w.WriteHeader(http.StatusBadRequest)
-		} else {
+    		err := json.NewDecoder(r.Body).Decode(&u)
+    		if err != nil {
+        		http.Error(w, err.Error(), http.StatusBadRequest)
+        		return
+    		}else {
+			u.UUID = uuid.New().String()			
+			db.Exec(query, u.Email, u.UUID, u.Hash, u.PubKey)		
 			w.WriteHeader(http.StatusOK)
+			fmt.Println("correct")
 		}
         }
 }
