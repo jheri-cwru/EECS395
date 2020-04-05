@@ -13,12 +13,11 @@ namespace Trail.Handlers
 
         public void processSignUp(string email, string passwordHash, string pubKey)
         {
-            client.BaseAddress = new System.Uri("http://127.0.0.1" + ":8080");
             client.DefaultRequestHeaders.Clear();
 
             var signupRequest = new Dictionary<string,string>
             {
-                { "Username", email },
+                { "Email", email },
                 { "Hash", passwordHash },
                 { "UUID", "" }, // Optional
                 { "PubKey", pubKey }
@@ -31,7 +30,9 @@ namespace Trail.Handlers
 
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            client.PostAsync("/signup", byteContent);
+            System.Diagnostics.Debug.WriteLine(jsonRequest);
+            HttpResponseMessage r = (client.PostAsync("http://127.0.0.1" + ":8080" + "/signup", byteContent)).Result;
+            System.Diagnostics.Debug.WriteLine(r.Headers);
         }
 
         public void processSignIn()

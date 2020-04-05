@@ -19,7 +19,10 @@ namespace Trail.Handlers
         
         public static Credential getCredential(string target)
         {
-            return new Credential { Target = target };
+            Credential storedCred = new Credential {Target = "Trail - Master Password" };
+            storedCred.Load();
+
+            return storedCred;
         }  
     }
 }

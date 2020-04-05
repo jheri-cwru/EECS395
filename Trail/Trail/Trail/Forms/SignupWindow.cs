@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Trail.Helpers;
 
 namespace Trail.Forms
 {
@@ -15,6 +9,12 @@ namespace Trail.Forms
         public SignupWindow()
         {
             InitializeComponent();
+        }
+
+        private void signupButton_Click(object sender, EventArgs e)
+        {
+            UserAuthentication authenticationFramework = new UserAuthentication();
+            authenticationFramework.createUser(usernameEntry.Text, passwordEntry.Text);
         }
     }
 }

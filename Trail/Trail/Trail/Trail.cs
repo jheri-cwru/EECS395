@@ -6,25 +6,24 @@ using System.Xml.Linq;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using Trail.Handlers;
 using Trail.Forms;
+using Trail.Helpers;
 
 namespace Trail
 {
     public partial class Trail
     {
         private CryptographyManager cryptoContext;
+        private UserAuthentication authFramework = new UserAuthentication();
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            /*
-             * 
-             * Code for testing of key generation, visual layout of sign up, and header modification - will be removed and replaced
-             * once back-end is integrated.
-             * 
-             * SignupWindow window = new SignupWindow();
-
-
-            // Check that add-in is configured.*/
-
+            System.Diagnostics.Debug.WriteLine(authFramework.userAuthenticated());
+            // Check that add-in is configured.
+            if (!authFramework.userAuthenticated())
+            {
+                SignupWindow window = new SignupWindow();
+                window.Show();
+            }
 
             // Register send handler to intercept & sign outgoing mail.
             Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(SignAndSend);

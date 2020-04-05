@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.applicationLogo = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.passwordEntry = new System.Windows.Forms.TextBox();
+            this.usernameEntry = new System.Windows.Forms.TextBox();
             this.signupButton = new System.Windows.Forms.Button();
             this.versionLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -47,19 +47,19 @@
             this.applicationLogo.TabIndex = 0;
             this.applicationLogo.TabStop = false;
             // 
-            // textBox1
+            // passwordEntry
             // 
-            this.textBox1.Location = new System.Drawing.Point(98, 327);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(189, 20);
-            this.textBox1.TabIndex = 1;
+            this.passwordEntry.Location = new System.Drawing.Point(98, 327);
+            this.passwordEntry.Name = "passwordEntry";
+            this.passwordEntry.Size = new System.Drawing.Size(189, 20);
+            this.passwordEntry.TabIndex = 1;
             // 
-            // textBox2
+            // usernameEntry
             // 
-            this.textBox2.Location = new System.Drawing.Point(98, 291);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(189, 20);
-            this.textBox2.TabIndex = 2;
+            this.usernameEntry.Location = new System.Drawing.Point(98, 291);
+            this.usernameEntry.Name = "usernameEntry";
+            this.usernameEntry.Size = new System.Drawing.Size(189, 20);
+            this.usernameEntry.TabIndex = 2;
             // 
             // signupButton
             // 
@@ -69,6 +69,7 @@
             this.signupButton.TabIndex = 3;
             this.signupButton.Text = "Link Account";
             this.signupButton.UseVisualStyleBackColor = true;
+            this.signupButton.Click += new System.EventHandler(this.signupButton_Click);
             // 
             // versionLabel
             // 
@@ -98,8 +99,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.signupButton);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.usernameEntry);
+            this.Controls.Add(this.passwordEntry);
             this.Controls.Add(this.applicationLogo);
             this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -120,8 +121,8 @@
         #endregion
 
         private System.Windows.Forms.PictureBox applicationLogo;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox passwordEntry;
+        private System.Windows.Forms.TextBox usernameEntry;
         private System.Windows.Forms.Button signupButton;
         private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.Label label2;
