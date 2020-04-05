@@ -15,6 +15,7 @@ namespace Trail.Forms
         {
             UserAuthentication authenticationFramework = new UserAuthentication();
             authenticationFramework.createUser(usernameEntry.Text, passwordEntry.Text);
+            this.Hide();
         }
     }
 }
