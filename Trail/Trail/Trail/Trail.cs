@@ -21,11 +21,7 @@ namespace Trail
              * once back-end is integrated.
              * 
              * SignupWindow window = new SignupWindow();
-            window.Show();
-            CredentialManager.generateCredential("cwru.senior.project.395@outlook.com", "TOBECHANGED", "Trail - Master Password");
-            
-            cryptoContext = new CryptographyManager(CredentialManager.getCredential("Trail - Master Password"));
-            cryptoContext.GenerateKeyPair();
+
 
             // Check that add-in is configured.*/
 
