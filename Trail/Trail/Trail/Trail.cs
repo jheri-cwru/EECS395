@@ -17,13 +17,15 @@ namespace Trail
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(authFramework.userAuthenticated());
-            // Check that add-in is configured.
+            // Check that user is authenticated..
             if (!authFramework.userAuthenticated())
             {
                 SignupWindow window = new SignupWindow();
                 window.Show();
             }
+
+            // Once authenticated, generate cryptography context to run in.
+            cryptoContext = new CryptographyManager(CredentialManager.getCredential("Trail - Master Password"));
 
             // Register send handler to intercept & sign outgoing mail.
             Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(SignAndSend);
